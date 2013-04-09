@@ -11,8 +11,21 @@ package contconcorrencia;
  */
 public class CachorroSalvaVidas  extends Thread {
     
-    public void run() {
+    /*public void run() {
         System.out.println(getName() + " executada.");
+    }*/
+    
+    private Pote pote;
+
+    public CachorroSalvaVidas(Pote buffer) {
+	this.pote = buffer;
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            pote.acrescentarMoeda();
+        }
     }
     
 }

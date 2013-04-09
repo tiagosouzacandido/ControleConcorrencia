@@ -9,23 +9,33 @@ package contconcorrencia;
  * @author Tiago
  */
 public class Cachorro extends Thread {
-    static ThreadLocal valorLocal = new ThreadLocal();
-    static int contador = 0;
-    
-    public void run() {
-        System.out.println(getName() + ": Nº de moedas = " + contador);
-        valorLocal.set(new Integer(contador++));
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        int valor = ((Integer)valorLocal.get()).intValue();
-        System.out.println(getName() + ": Nº de moedas = " + valor);
+    static ThreadLocal moedasColetadas = new ThreadLocal();
+    static int contador = 0; 
+    private Pote pote;
+
+    public Cachorro(Pote buffer, String nome) {
+        this.setName(nome);
+	this.pote = buffer;
     }
-    
-    public static void main (String args[]) {
-        for (int i =0; i<10; i++)
-            new Cachorro().start();
+
+    @Override
+    public void run() {
+        
+        moedasColetadas.set(new Integer(contador));
+        while (contador<20){
+            try {
+                pote.tirarMoeda();
+                contador++;
+                System.out.println("Cachorro (" + Thread.currentThread().getName()
+		+ ") está com " + contador + " moedas.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        moedasColetadas.set(new Integer(contador));
+        System.out.println("Cachorro (" + Thread.currentThread().getName()
+		+ ") conseguiu " + contador + " moedas.");
+        int valor = ((Integer)moedasColetadas.get()).intValue();
+        System.out.println(getName() + "Nº de moedas local = " + valor);
     }
 }

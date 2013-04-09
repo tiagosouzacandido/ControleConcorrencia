@@ -4,20 +4,40 @@
  */
 package contconcorrencia;
 
-import java.util.Stack;
 /**
  *
  * @author casa
  */
 public class Pote {
-    public static Stack buffer = new Stack();
-    public static final int BUFFER_SIZE = 4;
-    
-    protected int getSize(){
-        return BUFFER_SIZE;
-    }
-    
-    protected Stack getBuffer(){
-        return buffer;
-    }
+
+    private int moedas = 4;
+
+    public synchronized void acrescentarMoeda() {
+	while (moedas > 0) {
+	    try {
+		wait();
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	}
+	moedas = 1;
+	System.out.println("Colocada uma moeda no pote");
+	notifyAll();
+    } 
+
+    public synchronized int tirarMoeda() throws InterruptedException {
+	while (moedas == 0) {
+	    try {
+		wait();
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	}
+        Thread.sleep(100);
+	System.out.println("Cachorro (" + Thread.currentThread().getName()
+		+ ") pegou uma moeda ");
+	moedas--;
+	notifyAll();
+	return 1;
+    } 
 }
