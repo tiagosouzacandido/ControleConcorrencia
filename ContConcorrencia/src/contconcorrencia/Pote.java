@@ -26,18 +26,27 @@ public class Pote {
     } 
 
     public synchronized int tirarMoeda() throws InterruptedException {
-	while (moedas == 0) {
-	    try {
-		wait();
-	    } catch (InterruptedException e) {
-		e.printStackTrace();
-	    }
-	}
-        Thread.sleep(100);
-	System.out.println("Cachorro (" + Thread.currentThread().getName()
-		+ ") pegou uma moeda ");
-	moedas--;
-	notifyAll();
-	return 1;
+        int coletadas = 0;
+
+        if (moedas == 0) {
+            while (moedas == 0) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            Thread.sleep(100);
+            moedas--;
+            coletadas++;
+        }else {
+            while(coletadas < 3 && moedas > 0) {
+                Thread.sleep(100);
+                moedas--;
+                coletadas++;
+            }    
+        }   
+        notifyAll();
+	return coletadas;
     } 
 }

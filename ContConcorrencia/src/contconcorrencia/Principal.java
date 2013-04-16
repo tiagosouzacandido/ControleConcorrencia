@@ -36,6 +36,8 @@ public class Principal {
         }
         
         salvaVidas.shutdown();
-        
+        cacadorAmarelo.shutdown();
+        cacadorVerde.shutdown();
+        cacadorAzul.shutdown();
     }
 }
