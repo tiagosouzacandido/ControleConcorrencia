@@ -11,42 +11,41 @@ package contconcorrencia;
 public class Pote {
 
     private int moedas = 4;
+    private int[] caminho;
+    
+    public Pote(int[] array){
+        this.caminho = array;
+    }
 
     public synchronized void acrescentarMoeda() {
-	while (moedas > 0) {
-	    try {
-		wait();
-	    } catch (InterruptedException e) {
-		e.printStackTrace();
-	    }
-	}
-	moedas = 1;
-	System.out.println("Colocada uma moeda no pote");
-	notifyAll();
-    } 
+        while (moedas > 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        moedas = 1;
+        System.out.println("Colocada uma moeda no pote");
+        notifyAll();
+    }
 
     public synchronized int tirarMoeda() throws InterruptedException {
         int coletadas = 0;
 
-        if (moedas == 0) {
-            while (moedas == 0) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        while (moedas == 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+        }
+        while (coletadas < 3 && moedas > 0) {
             Thread.sleep(100);
             moedas--;
             coletadas++;
-        }else {
-            while(coletadas < 3 && moedas > 0) {
-                Thread.sleep(100);
-                moedas--;
-                coletadas++;
-            }    
-        }   
+        }
         notifyAll();
-	return coletadas;
-    } 
+        return coletadas;
+    }
 }
