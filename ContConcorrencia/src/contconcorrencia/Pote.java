@@ -4,6 +4,7 @@
  */
 package contconcorrencia;
 
+import java.util.Random;
 /**
  *
  * @author casa
@@ -47,5 +48,12 @@ public class Pote {
         }
         notifyAll();
         return coletadas;
+    }
+    
+    public int getCaminho(){
+        Random random = new Random();
+        int posicao = random.nextInt(caminho.length);
+        int i = caminho[posicao];
+        return i;
     }
 }

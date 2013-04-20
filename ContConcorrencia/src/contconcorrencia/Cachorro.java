@@ -12,11 +12,13 @@ public class Cachorro extends Thread {
     static ThreadLocal moedasColetadas = new ThreadLocal();
     private int contador = 0; 
     private Pote pote;
+    private Bosque bosque;
 
-    public Cachorro(Pote buffer, String nome) {
+    public Cachorro(Bosque bosque,Pote pote, String nome) {
         this.setName(nome);
-	this.pote = buffer;
+	this.pote = pote;
         moedasColetadas.set(0);
+        this.bosque = bosque;
     }
 
     @Override
@@ -27,15 +29,16 @@ public class Cachorro extends Thread {
             try {
                 int coletadas = pote.tirarMoeda();
                 contador+=coletadas;
-                System.out.println( getName()
-		+ " está com " + contador + " moedas.");
+                System.out.println( getName() + " está com " + contador + " moedas.");
+                int caminho = pote.getCaminho();
+                pote = bosque.getPote(caminho);
+                System.out.println( getName() + " entrou no pote " + caminho + ".");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         moedasColetadas.set(new Integer(contador));
-        System.out.println( getName()
-		+ " conseguiu " + contador + " moedas.");
+        System.out.println( getName() + " conseguiu " + contador + " moedas.");
         int valor = ((Integer)moedasColetadas.get()).intValue();
         System.out.println(getName() + " Nº de moedas local = " + valor);
     }
