@@ -4,28 +4,26 @@
  */
 package contconcorrencia;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Tiago
  */
 public class CachorroSalvaVidas extends Thread {
 
-    /*public void run() {
-     System.out.println(getName() + " executada.");
-     }*/
     private Pote pote;
+    private Bosque bosque;
 
-    public CachorroSalvaVidas(Pote buffer) {
-        this.pote = buffer;
+    public CachorroSalvaVidas(Bosque bosque) {
+        this.bosque=bosque;
     }
 
     @Override
     public void run() {
-        while (true) {
-            pote.acrescentarMoeda();
+        for (int i = 1;i<=20;i++){
+            pote = bosque.getPote(i);
+            if (pote.isVazio()){
+                pote.acrescentarMoeda();
+            }
         }
     }
 }

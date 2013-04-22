@@ -12,10 +12,12 @@ public class Cacador {
     
     private int moedas;
     private boolean venceu;
+    private String nome;
     
-    public Cacador(){
+    public Cacador(String nome){
         moedas = 0;
         venceu = false;
+        this.nome=nome;
     }
     
     public boolean getVenceu(){
@@ -24,6 +26,7 @@ public class Cacador {
     
     public void setVenceu(){
         venceu = true;
+        System.out.println("Caçador "+nome+" venceu.");
     }
     
     public void setMoedas(int quant){
@@ -31,6 +34,7 @@ public class Cacador {
         if (moedas >= 50){
             setVenceu();
         }
+        System.out.println("Caçador "+nome+" está com " + moedas +" moedas.");
     }
     
     public int getMoedas(){

@@ -9,37 +9,51 @@ package contconcorrencia;
  * @author Tiago
  */
 public class Cachorro extends Thread {
+
     static ThreadLocal moedasColetadas = new ThreadLocal();
-    private int contador = 0; 
+    private int contador = 0;
     private Pote pote;
     private Bosque bosque;
+    private Cacador cacador;
 
-    public Cachorro(Bosque bosque,Pote pote, String nome) {
+    public Cachorro(Cacador cacador, Bosque bosque, Pote pote, String nome) {
         this.setName(nome);
-	this.pote = pote;
+        this.pote = pote;
         moedasColetadas.set(0);
         this.bosque = bosque;
+        this.cacador = cacador;
     }
 
     @Override
     public void run() {
-        
+
         moedasColetadas.set(new Integer(contador));
-        while (contador<20){
-            try {
-                int coletadas = pote.tirarMoeda();
-                contador+=coletadas;
-                System.out.println( getName() + " está com " + contador + " moedas.");
-                int caminho = pote.getCaminho();
-                pote = bosque.getPote(caminho);
-                System.out.println( getName() + " entrou no pote " + caminho + ".");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+        while (!cacador.getVenceu()) {
+            while (contador < 20 && cacador.getMoedas()+contador <50) {
+                try {
+                    int coletadas = pote.tirarMoeda();
+                    contador += coletadas;
+                    System.out.println(getName() + " está com " + contador + " moedas.");
+                    int caminho = pote.getCaminho();
+                    pote = bosque.getPote(caminho);
+                    System.out.println(getName() + " entrou no pote " + caminho + ".");
+                } catch (InterruptedException e) {
+                }
             }
+            moedasColetadas.set(new Integer(contador));
+            System.out.println(getName() + " conseguiu " + contador + " moedas. Indo entregar para o caçador.");
+            cacador.setMoedas(contador);
+            contador = 0;
+
+            //this.interrupt();
+            //this.yield();
         }
-        moedasColetadas.set(new Integer(contador));
-        System.out.println( getName() + " conseguiu " + contador + " moedas.");
-        int valor = ((Integer)moedasColetadas.get()).intValue();
-        System.out.println(getName() + " Nº de moedas local = " + valor);
+        cacador.setMoedas(contador);
+        
+        try {
+            this.finalize();
+        } catch (Throwable e) {
+        }
     }
 }
