@@ -33,25 +33,31 @@ public class Principal {
         
         ScheduledExecutorService salvaVidas = Executors.newSingleThreadScheduledExecutor();
         salvaVidas.scheduleAtFixedRate(new CachorroSalvaVidas(bosque), 0, 200, TimeUnit.MILLISECONDS);
-
+        
+        
         Cachorro amarelo1 = new Cachorro(cacadorAmarelo, bosque, bosque.getPote(1), "Cachorro Amarelo 1");
-        Cachorro amarelo2 = new Cachorro(cacadorAmarelo, bosque, bosque.getPote(1), "Cachorro Amarelo 2");
         Cachorro verde1 = new Cachorro(cacadorVerde, bosque, bosque.getPote(1), "Cachorro Verde 1");
-        Cachorro verde2 = new Cachorro(cacadorVerde, bosque, bosque.getPote(1), "Cachorro Verde 2");
         Cachorro azul1 = new Cachorro(cacadorAzul, bosque, bosque.getPote(1), "Cachorro Azul 1");
+        Cachorro amarelo2 = new Cachorro(cacadorAmarelo, bosque, bosque.getPote(1), "Cachorro Amarelo 2");    
+        Cachorro verde2 = new Cachorro(cacadorVerde, bosque, bosque.getPote(1), "Cachorro Verde 2");  
         Cachorro azul2 = new Cachorro(cacadorAzul, bosque, bosque.getPote(1), "Cachorro Azul 2");
 
         exAmarelo.execute(amarelo1);
-        exAmarelo.execute(amarelo2);
         exVerde.execute(verde1);
-        exVerde.execute(verde2);
         exAzul.execute(azul1);
+        exAmarelo.execute(amarelo2);
+        exVerde.execute(verde2);     
         exAzul.execute(azul2);
+        exAmarelo.execute(amarelo1);
+        exVerde.execute(verde1);
+        exAzul.execute(azul1);
 
-
-        //exAmarelo.shutdown();
-        //exVerde.shutdown();
-        //exAzul.shutdown();
+        
+        /*if(cacadorAmarelo.getVenceu() || cacadorVerde.getVenceu() || cacadorAzul.getVenceu()){       
+        }*/
+        //exAmarelo.shutdownNow();
+        //exVerde.shutdownNow();
+        //exAzul.shutdownNow();
         //salvaVidas.shutdown();
     }
 }

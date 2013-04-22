@@ -26,7 +26,7 @@ public class Cacador {
     
     public void setVenceu(){
         venceu = true;
-        System.out.println("Caçador "+nome+" venceu.");
+        System.out.println("---------------Caçador "+nome+" venceu.------------------");
     }
     
     public void setMoedas(int quant){
