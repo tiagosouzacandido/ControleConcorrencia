@@ -27,5 +27,6 @@ public class CachorroSalvaVidas extends Thread {
                 }
             }
         }
+        System.out.println(getName() + " terminou.");
     }
 }

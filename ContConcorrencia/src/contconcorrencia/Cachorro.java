@@ -43,5 +43,6 @@ public class Cachorro extends Thread {
             cacador.setMoedas(contador);
             contador = 0;
         }
+        System.out.println(getName() + " terminou.");
     }
 }

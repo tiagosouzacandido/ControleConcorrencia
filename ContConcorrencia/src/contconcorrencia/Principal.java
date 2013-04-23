@@ -18,6 +18,8 @@ public class Principal {
     /**
      * @param args the command line arguments
      */
+    static ScheduledExecutorService salvaVidas;
+    
     public static void main(String[] args) {
         // TODO code application logic here
 
@@ -31,7 +33,7 @@ public class Principal {
         ExecutorService exVerde = Executors.newFixedThreadPool(1);
         ExecutorService exAzul = Executors.newFixedThreadPool(1);
         
-        ScheduledExecutorService salvaVidas = Executors.newSingleThreadScheduledExecutor();
+        salvaVidas = Executors.newSingleThreadScheduledExecutor();
         salvaVidas.scheduleAtFixedRate(new CachorroSalvaVidas(bosque), 0, 200, TimeUnit.MILLISECONDS);     
         
         Cachorro amarelo1 = new Cachorro(cacadorAmarelo, bosque, bosque.getPote(1), "Cachorro Amarelo 1");
@@ -51,5 +53,11 @@ public class Principal {
         exVerde.execute(verde1);
         exAzul.execute(azul1);
         
+        desligaSalvaVidas();
+        
+    }
+    
+    public static void desligaSalvaVidas(){
+        salvaVidas.shutdown();
     }
 }
