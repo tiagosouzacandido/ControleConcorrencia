@@ -45,10 +45,10 @@ public class Pote {
             }
         }
         while (coletadas < 3 && moedas > 0) {
-            Thread.sleep(100);
             moedas--;
             coletadas++;
         }
+        Thread.sleep(100);
         notifyAll();
         return coletadas;
     }

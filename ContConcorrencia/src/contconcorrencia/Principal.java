@@ -32,8 +32,7 @@ public class Principal {
         ExecutorService exAzul = Executors.newFixedThreadPool(1);
         
         ScheduledExecutorService salvaVidas = Executors.newSingleThreadScheduledExecutor();
-        salvaVidas.scheduleAtFixedRate(new CachorroSalvaVidas(bosque), 0, 200, TimeUnit.MILLISECONDS);
-        
+        salvaVidas.scheduleAtFixedRate(new CachorroSalvaVidas(bosque), 0, 200, TimeUnit.MILLISECONDS);     
         
         Cachorro amarelo1 = new Cachorro(cacadorAmarelo, bosque, bosque.getPote(1), "Cachorro Amarelo 1");
         Cachorro verde1 = new Cachorro(cacadorVerde, bosque, bosque.getPote(1), "Cachorro Verde 1");
@@ -51,13 +50,6 @@ public class Principal {
         exAmarelo.execute(amarelo1);
         exVerde.execute(verde1);
         exAzul.execute(azul1);
-
         
-        /*if(cacadorAmarelo.getVenceu() || cacadorVerde.getVenceu() || cacadorAzul.getVenceu()){       
-        }*/
-        //exAmarelo.shutdownNow();
-        //exVerde.shutdownNow();
-        //exAzul.shutdownNow();
-        //salvaVidas.shutdown();
     }
 }

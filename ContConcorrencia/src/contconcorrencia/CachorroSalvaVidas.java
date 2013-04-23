@@ -14,15 +14,17 @@ public class CachorroSalvaVidas extends Thread {
     private Bosque bosque;
 
     public CachorroSalvaVidas(Bosque bosque) {
-        this.bosque=bosque;
+        this.bosque = bosque;
     }
 
     @Override
     public void run() {
-        for (int i = 1;i<=20;i++){
-            pote = bosque.getPote(i);
-            if (pote.isVazio()){
-                pote.acrescentarMoeda();
+        while (Cachorro.running) {
+            for (int i = 1; i <= 20; i++) {
+                pote = bosque.getPote(i);
+                if (pote.isVazio()) {
+                    pote.acrescentarMoeda();
+                }
             }
         }
     }

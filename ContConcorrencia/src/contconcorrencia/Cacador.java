@@ -26,6 +26,7 @@ public class Cacador {
     
     public void setVenceu(){
         venceu = true;
+        Cachorro.running=false;
         System.out.println("---------------Caçador "+nome+" venceu.------------------");
     }
     
